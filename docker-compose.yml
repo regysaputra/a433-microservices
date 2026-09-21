@@ -1,0 +1,32 @@
+# Define the application and database services managed by Compose.
+services:
+  # Run the item application.
+  item-app:
+    # Use the v1 image published to GitHub Container Registry (GitHub Packages).
+    image: ghcr.io/regysaputra/item-app:v1
+    # Restart on exit; a manual stop pauses restarts until Docker or the container restarts.
+    restart: always
+    # Publish container ports to the host.
+    ports:
+      # Forward host port 80 to the application's port 8080 inside the container.
+      - "80:8080"
+    # Start dependencies first; this does not wait for MongoDB to accept connections.
+    depends_on:
+      # Start the item-db container before starting item-app.
+      - item-db
+
+  # Run the MongoDB database; other services can reach it using the name item-db.
+  item-db:
+    # Use the official MongoDB image with tag 3 from Docker Hub.
+    image: mongo:3
+    # Restart on exit; a manual stop pauses restarts until Docker or the container restarts.
+    restart: always
+    # Attach persistent storage to the database container.
+    volumes:
+      # Store MongoDB data in app-db so it survives container removal.
+      - app-db:/data/db
+
+# Declare named volumes that Compose creates and manages.
+volumes:
+  # Use the default volume driver; Compose normally prefixes this name with the project name.
+  app-db:

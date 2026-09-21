@@ -6,10 +6,9 @@
     "build": "node ./node_modules/gulp/bin/gulp.js",
     "start": "node ./bin/www",
     "stop": "pkill -SIGINT ca-app",
-    "test": "karma start",
-    "preinstall": "npx npm-force-resolutions"
+    "test": "karma start"
   },
-  "resolutions": {
+  "overrides": {
     "graceful-fs": "^4.2.4"
   },
   "dependencies": {

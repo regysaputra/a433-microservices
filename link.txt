@@ -1,0 +1,1 @@
+ghcr.io/regysaputra/item-app:v1
